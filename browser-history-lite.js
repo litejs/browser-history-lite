@@ -2,7 +2,7 @@
 
 
 /*
-* @version  0.0.1
+* @version  0.0.2
 * @author   Lauri Rooden - https://github.com/litejs/browser-history-lite
 * @license  MIT License  - http://lauri.rooden.ee/mit-license.txt
 */
@@ -11,29 +11,53 @@
 
 !function(win, doc, his) {
 	var cb, base, last_route, iframe, tick, last
+	, loc = location
 	, clean_route = /^[#\/\!]+|[\s\/]+$/g
+	/*
+	* The JScript engine used in IE doesn't recognize vertical tabulation character
+	* http://webreflection.blogspot.com/2009/01/32-bytes-to-know-if-your-browser-is-ie.html
+	* oldIE = "\v" == "v"
+	*
+	* The documentMode is an IE only property, supported in IE8+.
+	*
+	* Starting in Internet Explorer 9 standards mode, Internet Explorer 10 standards mode, 
+	* and win8_appname_long apps, you cannot identify the browser as Internet Explorer 
+	* by testing for the equivalence of the vertical tab (\v) and the "v". 
+	* In earlier versions, the expression "\v" === "v" returns true. 
+	* In Internet Explorer 9 standards mode, Internet Explorer 10 standards mode, 
+	* and win8_appname_long apps, the expression returns false.
+	*/
 	, ie6_7 = !+"\v1" && (doc.documentMode||1) < 8
 
-	function getUrl(loc) {
+	function getUrl(_loc) {
+		var url
 		if (base) {
-			return location.pathname.slice(base.length).replace(clean_route, "")
+			url = loc.pathname.slice(base.length)
+		} else {
+			/*
+			* bug in Firefox where location.hash is decoded
+			* bug in Safari where location.pathname is decoded
+			* 
+			* var hash = loc.href.split('#')[1] || '';
+			* https://bugs.webkit.org/show_bug.cgi?id=30225
+			* https://github.com/documentcloud/backbone/pull/967
+			*/
+			url = (_loc || loc).href.split("#")[1] || ""
 		}
 		/*
-		* https://bugs.webkit.org/show_bug.cgi?id=30225
-		* https://github.com/documentcloud/backbone/pull/967
+		* Fix decode
+		* http://unixpapa.com/js/querystring.html
 		*/
-		return ((loc || location).hash||"").replace(clean_route, "")
+		url = decodeURIComponent(url.replace(/\+/g, " "))
+		return url.replace(clean_route, "")
 	}
 
-	function checkUrl() {
-		if (last_route != (last_route = getUrl()) && cb) cb(last_route)
-	}
-	
 	function setUrl(url, replace) {
+		url = encodeURIComponent(url).replace(/%20/g, "+")
 		if (base) {
 			his[replace ? "replaceState" : "pushState"](null, null, base + url)
 		} else {
-			location[replace ? "replace" : "assign"]("#" + url)
+			loc[replace ? "replace" : "assign"]("#" + url)
 			/*
 			* Opening and closing the iframe tricks IE7 and earlier 
 			* to push a history entry on hash-tag change.
@@ -45,6 +69,10 @@
 		checkUrl()
 	}
 
+	function checkUrl() {
+		if (last_route != (last_route = getUrl()) && cb) cb(last_route)
+	}
+	
 	his.getUrl = getUrl
 	his.setUrl = setUrl
 
@@ -72,7 +100,7 @@
 				win.onhashchange = checkUrl
 			} else {
 				if (ie6_7) {
-					iframe = doc.body.appendChild(doc.createElement('<iframe class="hidden" src="javascript:0" tabindex="-1" />')).contentWindow
+					iframe = doc.body.appendChild(doc.createElement('<iframe class="hide" src="javascript:0" tabindex="-1" />')).contentWindow
 				}
 				last = getUrl()
 				tick = setInterval(function(){

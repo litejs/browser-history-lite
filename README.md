@@ -8,7 +8,7 @@ History
 
 Browser history helper.
 Download [compressed][1] 
-(815 bytes or 527 bytes gzipped)
+(892 bytes, 577 bytes gzipped)
 or [uncompressed][2] source.
 
 
