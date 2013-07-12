@@ -1,6 +1,10 @@
 
-[1]: https://raw.github.com/litejs/browser-history-lite/master/min.js
-[2]: https://raw.github.com/litejs/browser-history-lite/master/browser-history-lite.js
+[1]: https://raw.github.com/litejs/browser-history-lite/master/min.browser-history.js
+[2]: https://raw.github.com/litejs/browser-history-lite/master/browser-history.js
+
+
+    @version  0.0.3
+    @date     2013-07-13
 
 
 History
@@ -8,7 +12,7 @@ History
 
 Browser history helper.
 Download [compressed][1] 
-(892 bytes, 577 bytes gzipped)
+(892 bytes, 591 bytes gzipped)
 or [uncompressed][2] source.
 
 

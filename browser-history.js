@@ -2,7 +2,7 @@
 
 
 /*
-* @version  0.0.2
+* @version  0.0.3
 * @author   Lauri Rooden - https://github.com/litejs/browser-history-lite
 * @license  MIT License  - http://lauri.rooden.ee/mit-license.txt
 */
