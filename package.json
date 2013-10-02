@@ -1,6 +1,6 @@
 {
 	"name": "browser-history-lite",
-	"version": "0.0.3",
+	"version": "0.0.4",
 	"license": "MIT",
 	"description": "History helper for browser",
 	"main": "browser-history.js",

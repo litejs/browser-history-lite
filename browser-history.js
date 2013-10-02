@@ -2,7 +2,7 @@
 
 
 /*
-* @version  0.0.3
+* @version  0.0.4
 * @author   Lauri Rooden - https://github.com/litejs/browser-history-lite
 * @license  MIT License  - http://lauri.rooden.ee/mit-license.txt
 */
@@ -53,7 +53,7 @@
 	}
 
 	function setUrl(url, replace) {
-		url = encodeURIComponent(url).replace(/%20/g, "+")
+		url = encodeURIComponent(url).replace(/%20/g, "+").replace(/%2F/gi, "/")
 		if (base) {
 			his[replace ? "replaceState" : "pushState"](null, null, base + url)
 		} else {
