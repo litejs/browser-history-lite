@@ -1,19 +1,14 @@
 
-[1]: https://raw.github.com/litejs/browser-history-lite/master/min.browser-history.js
-[2]: https://raw.github.com/litejs/browser-history-lite/master/browser-history.js
+
+    @version    0.1.0
+    @date       2014-05-16
+    @stability  2 - Unstable
 
 
-    @version  0.0.4
-    @date     2013-10-02
-
-
-History
-=======
+Browser History
+===============
 
 Browser history helper.
-Download [compressed][1] 
-(913 bytes, 600 bytes gzipped)
-or [uncompressed][2] source.
 
 
 ### Usage
@@ -27,10 +22,16 @@ function log(route) {
 history.start(log)
 ```
 
+External links
+--------------
+
+-   [Source-code on Github](https://github.com/litejs/browser-history-lite)
+-   [Package on npm](https://npmjs.org/package/browser-history-lite)
+
 
 ### Licence
 
-Copyright (c) 2012 Lauri Rooden &lt;lauri@rooden.ee&gt;  
+Copyright (c) 2012, 2014 Lauri Rooden &lt;lauri@rooden.ee&gt;  
 [The MIT License](http://lauri.rooden.ee/mit-license.txt)
 
 

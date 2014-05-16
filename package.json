@@ -1,21 +1,41 @@
 {
-	"name": "browser-history-lite",
-	"version": "0.0.4",
-	"license": "MIT",
-	"description": "History helper for browser",
-	"main": "browser-history.js",
-	"author": "Lauri Rooden <lauri@rooden.ee>",
-	"repository": {
-		"type": "git",
-		"url": "git://github.com/litejs/browser-history-lite.git"
-	},
-	"bugs": {
-		"url": "https://github.com/litejs/browser-history-lite/issues"
-	},
-	"keywords": [
-		"browser",
-		"history",
-		"litejs"
-	],
-	"readmeFilename": "README.md"
+  "name": "browser-history-lite",
+  "version": "0.1.0",
+  "stability": 2,
+  "license": "MIT",
+  "author": "Lauri Rooden <lauri@rooden.ee>",
+  "description": "History helper for browser",
+  "keywords": [
+    "browser",
+    "history",
+    "litejs"
+  ],
+  "main": "index.js",
+  "readmeFilename": "README.md",
+  "scripts": {
+    "build": "node node_modules/buildman/index.js --all",
+    "travis-test": "istanbul cover ./tests/run.js && (coveralls < coverage/lcov.info || exit 0)",
+    "test": "node tests/run.js"
+  },
+  "repository": "git://github.com/litejs/browser-history-lite.git",
+  "bugs": {
+    "url": "https://github.com/litejs/browser-history-lite/issues"
+  },
+  "devDependencies": {
+    "buildman": "*"
+  },
+  "buildman": {
+    "build/hash-only.js": {
+      "banner": "/*! litejs.com/MIT-LICENSE.txt */",
+      "devel": true,
+      "input": "index.js",
+      "toggle": "PUSH"
+    },
+    "build/min.js": {
+      "banner": "/*! litejs.com/MIT-LICENSE.txt */",
+      "input": [
+        "index.js"
+      ]
+    }
+  }
 }
