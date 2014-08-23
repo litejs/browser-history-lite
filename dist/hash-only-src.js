@@ -8,7 +8,7 @@
 * @license  MIT License
 */
 
-
+// https://github.com/browserstate/history.js/wiki/The-State-of-the-HTML5-History-API
 
 !function(win, doc, his) {
 	var cb, base, last_route, iframe, tick, last

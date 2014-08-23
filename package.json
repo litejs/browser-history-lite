@@ -25,13 +25,13 @@
     "buildman": "*"
   },
   "buildman": {
-    "build/hash-only.js": {
+    "dist/hash-only.js": {
       "banner": "/*! litejs.com/MIT-LICENSE.txt */",
       "devel": true,
       "input": "index.js",
       "toggle": "PUSH"
     },
-    "build/min.js": {
+    "dist/index-min.js": {
       "banner": "/*! litejs.com/MIT-LICENSE.txt */",
       "input": [
         "index.js"
