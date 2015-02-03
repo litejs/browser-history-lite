@@ -2,8 +2,8 @@
 
 
 /**
- * @version    0.1.1
- * @date       2014-09-16
+ * @version    0.1.2
+ * @date       2015-02-03
  * @stability  2 - Unstable
  * @author     Lauri Rooden <lauri@rooden.ee>
  * @license    MIT License
@@ -106,7 +106,8 @@
 				if (ie6_7) {
 					// IE<9 encounters the Mixed Content warning when the URI javascript: is used.
 					// IE5/6 additionally encounters the Mixed Content warning when the URI about:blank is used.
-					iframe = document.body.appendChild(document.createElement('<iframe class="hide" src="//:" tabindex="-1">')).contentWindow
+					// src="//:"
+					iframe = document.body.appendChild(document.createElement('<iframe class="hide" tabindex="-1">')).contentWindow
 				}
 				last = getUrl()
 				tick = setInterval(function(){
