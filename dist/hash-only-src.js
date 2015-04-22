@@ -3,8 +3,8 @@
 
 
 /*
- * @version    0.1.3
- * @date       2015-03-24
+ * @version    0.1.4
+ * @date       2015-04-23
  * @stability  2 - Unstable
  * @author     Lauri Rooden <lauri@rooden.ee>
  * @license    MIT License
@@ -110,7 +110,6 @@
 					// src="//:"
 					iframe = document.body.appendChild(document.createElement('<iframe class="hide" tabindex="-1">')).contentWindow
 				}
-				last = getUrl()
 				tick = setInterval(function(){
 					var cur = getUrl()
 					if (iframe && last === cur) cur = getUrl(iframe.location)
@@ -118,7 +117,7 @@
 						last = cur
 						iframe ? setUrl(cur) : checkUrl()
 					}
-				}, 50)
+				}, 60)
 			}
 		}
 		cb = _cb
