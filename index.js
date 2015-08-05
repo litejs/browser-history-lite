@@ -57,16 +57,17 @@
 
 	function setUrl(url, replace) {
 		url = encodeURIComponent(url).replace(/%20/g, "+").replace(/%2F/gi, "/")
+		url = base ? base + url : "#" + url
 		//** PUSH
-		if (base) {
-			history[replace ? "replaceState" : "pushState"](null, null, base + url)
+		if (history.pushState) {
+			history[replace ? "replaceState" : "pushState"](null, null, url)
 		} else {
 		//*/
-			loc[replace ? "replace" : "assign"]("#" + url)
+			loc[replace ? "replace" : "assign"](url)
 			// Opening and closing the iframe tricks IE7 and earlier
 			// to push a history entry on hash-tag change.
 			if (iframe && getUrl() !== getUrl(iframe.location) ) {
-				iframe.location[replace ? "replace" : iframe.document.open().close(), "assign"]("#" + url)
+				iframe.location[replace ? "replace" : iframe.document.open().close(), "assign"](url)
 			}
 		//** PUSH
 		}
@@ -84,8 +85,8 @@
 	history.start = function(_cb, _base) {
 		cb = _cb
 		//** PUSH
-		if (_base && history.pushState) {
-			base = _base
+		base = _base
+		if (history.pushState) {
 			// Chrome and Safari emit a popstate event on page load, Firefox doesn't.
 			// Firing popstate after onload is as designed.
 			//
