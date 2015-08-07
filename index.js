@@ -104,12 +104,13 @@
 			// Chrome 5.0, Firefox (Gecko) 3.6 (1.9.2), IE 8.0, Opera 10.6, Safari 5.0
 			window.onhashchange = checkUrl
 		} else {
-			if (ie6_7) {
+			if (ie6_7 && !iframe) {
 				// IE<9 encounters the Mixed Content warning when the URI javascript: is used.
 				// IE5/6 additionally encounters the Mixed Content warning when the URI about:blank is used.
 				// src="//:"
 				iframe = document.body.appendChild(document.createElement('<iframe class="hide" tabindex="-1">')).contentWindow
 			}
+			clearInterval(tick)
 			tick = setInterval(function(){
 				var cur = getUrl()
 				if (iframe && last === cur) cur = getUrl(iframe.location)
