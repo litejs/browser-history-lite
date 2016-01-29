@@ -49,14 +49,10 @@
 		//** PUSH
 		}
 		//*/
-		// Fix decode
-		// http://unixpapa.com/js/querystring.html
-		url = decodeURIComponent(url.replace(/\+/g, " "))
 		return url.replace(clean_route, "")
 	}
 
 	function setUrl(url, replace) {
-		url = encodeURIComponent(url).replace(/%20/g, "+").replace(/%2F/gi, "/")
 		//** PUSH
 		if (base) {
 			history[replace ? "replaceState" : "pushState"](null, null, base + url)
@@ -100,7 +96,7 @@
 			// There are onhashchange in IE7 but its not get emitted
 			//
 			// Basic support:
-			// Chrome 5.0, Firefox (Gecko) 3.6 (1.9.2), IE 8.0, Opera 10.6, Safari 5.0
+			// Chrome 5.0, Firefox 3.6, IE 8, Opera 10.6, Safari 5.0
 			window.onhashchange = checkUrl
 		} else {
 			if (ie6_7 && !iframe) {
