@@ -3,8 +3,8 @@
 
 
 /*
- * @version    0.1.4
- * @date       2015-04-23
+ * @version    0.1.5
+ * @date       2016-03-09
  * @stability  2 - Unstable
  * @author     Lauri Rooden <lauri@rooden.ee>
  * @license    MIT License
@@ -50,14 +50,10 @@
 		/*** PUSH
 		}
 		//*/
-		// Fix decode
-		// http://unixpapa.com/js/querystring.html
-		url = decodeURIComponent(url.replace(/\+/g, " "))
 		return url.replace(clean_route, "")
 	}
 
 	function setUrl(url, replace) {
-		url = encodeURIComponent(url).replace(/%20/g, "+").replace(/%2F/gi, "/")
 		/*** PUSH
 		if (base) {
 			history[replace ? "replaceState" : "pushState"](null, null, base + url)
@@ -83,44 +79,43 @@
 	history.setUrl = setUrl
 
 	history.start = function(_cb, _base) {
-		if (!cb) {
-			/*** PUSH
-			if (_base && history.pushState) {
-				base = _base
-				// Chrome and Safari emit a popstate event on page load, Firefox doesn't.
-				// Firing popstate after onload is as designed.
-				//
-				// See the discussion on https://bugs.webkit.org/show_bug.cgi?id=41372,
-				// https://code.google.com/p/chromium/issues/detail?id=63040
-				// and the change to the HTML5 spec that was made:
-				// http://html5.org/tools/web-apps-tracker?from=5345&to=5346.
-				window.onpopstate = checkUrl
-			} else
-			//*/
-				if ("onhashchange" in window && !ie6_7) {
-				// There are onhashchange in IE7 but its not get emitted
-				//
-				// Basic support:
-				// Chrome 5.0, Firefox (Gecko) 3.6 (1.9.2), IE 8.0, Opera 10.6, Safari 5.0
-				window.onhashchange = checkUrl
-			} else {
-				if (ie6_7) {
-					// IE<9 encounters the Mixed Content warning when the URI javascript: is used.
-					// IE5/6 additionally encounters the Mixed Content warning when the URI about:blank is used.
-					// src="//:"
-					iframe = document.body.appendChild(document.createElement('<iframe class="hide" tabindex="-1">')).contentWindow
-				}
-				tick = setInterval(function(){
-					var cur = getUrl()
-					if (iframe && last === cur) cur = getUrl(iframe.location)
-					if (last !== cur) {
-						last = cur
-						iframe ? setUrl(cur) : checkUrl()
-					}
-				}, 60)
-			}
-		}
 		cb = _cb
+		/*** PUSH
+		if (_base && history.pushState) {
+			base = _base
+			// Chrome and Safari emit a popstate event on page load, Firefox doesn't.
+			// Firing popstate after onload is as designed.
+			//
+			// See the discussion on https://bugs.webkit.org/show_bug.cgi?id=41372,
+			// https://code.google.com/p/chromium/issues/detail?id=63040
+			// and the change to the HTML5 spec that was made:
+			// http://html5.org/tools/web-apps-tracker?from=5345&to=5346.
+			window.onpopstate = checkUrl
+		} else
+		//*/
+			if ("onhashchange" in window && !ie6_7) {
+			// There are onhashchange in IE7 but its not get emitted
+			//
+			// Basic support:
+			// Chrome 5.0, Firefox 3.6, IE 8, Opera 10.6, Safari 5.0
+			window.onhashchange = checkUrl
+		} else {
+			if (ie6_7 && !iframe) {
+				// IE<9 encounters the Mixed Content warning when the URI javascript: is used.
+				// IE5/6 additionally encounters the Mixed Content warning when the URI about:blank is used.
+				// src="//:"
+				iframe = document.body.appendChild(document.createElement('<iframe class="hide" tabindex="-1">')).contentWindow
+			}
+			clearInterval(tick)
+			tick = setInterval(function(){
+				var cur = getUrl()
+				if (iframe && last === cur) cur = getUrl(iframe.location)
+				if (last !== cur) {
+					last = cur
+					iframe ? setUrl(cur) : checkUrl()
+				}
+			}, 60)
+		}
 		checkUrl()
 	}
 }(this, document, history)
