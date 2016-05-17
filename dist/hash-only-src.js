@@ -3,8 +3,8 @@
 
 
 /*
- * @version    0.1.5
- * @date       2016-03-09
+ * @version    0.2.0
+ * @date       2016-05-17
  * @stability  2 - Unstable
  * @author     Lauri Rooden <lauri@rooden.ee>
  * @license    MIT License
@@ -14,9 +14,8 @@
 
 // https://github.com/browserstate/history.js/wiki/The-State-of-the-HTML5-History-API
 
-!function(window, document, history) {
+!function(window, document, history, location) {
 	var cb, base, last_route, iframe, tick, last
-	, loc = location
 	, clean_route = /^[#\/\!]+|[\s\/]+$/g
 
 	// The JScript engine used in IE doesn't recognize vertical tabulation character
@@ -37,16 +36,16 @@
 		var url
 		/*** PUSH
 		if (base) {
-			url = loc.pathname.slice(base.length)
+			url = location.pathname.slice(base.length)
 		} else {
 		//*/
 			// bug in Firefox where location.hash is decoded
 			// bug in Safari where location.pathname is decoded
 
-			// var hash = loc.href.split('#')[1] || '';
+			// var hash = location.href.split('#')[1] || '';
 			// https://bugs.webkit.org/show_bug.cgi?id=30225
 			// https://github.com/documentcloud/backbone/pull/967
-			url = (_loc || loc).href.split("#")[1] || ""
+			url = (_loc || location).href.split("#")[1] || ""
 		/*** PUSH
 		}
 		//*/
@@ -59,7 +58,7 @@
 			history[replace ? "replaceState" : "pushState"](null, null, base + url)
 		} else {
 		//*/
-			loc[replace ? "replace" : "assign"]("#" + url)
+			location[replace ? "replace" : "assign"]("#" + url)
 			// Opening and closing the iframe tricks IE7 and earlier
 			// to push a history entry on hash-tag change.
 			if (iframe && getUrl() !== getUrl(iframe.location) ) {
@@ -78,11 +77,24 @@
 	history.getUrl = getUrl
 	history.setUrl = setUrl
 
-	history.start = function(_cb, _base) {
+	history.start = function(_cb, _base, url) {
 		cb = _cb
 		/*** PUSH
+		// Chrome5, Firefox4, IE10, Safari5, Opera11.50
+		if (_base && !history.pushState) {
+			url = location.pathname.slice(_base.length)
+			if (url) {
+				location.replace(_base + "#" + url)
+			}
+		}
 		if (_base && history.pushState) {
 			base = _base
+
+			url = location.href.split("#")[1]
+			if (url && !getUrl()) {
+				setUrl(url, 1)
+			}
+
 			// Chrome and Safari emit a popstate event on page load, Firefox doesn't.
 			// Firing popstate after onload is as designed.
 			//
@@ -118,7 +130,7 @@
 		}
 		checkUrl()
 	}
-}(this, document, history)
+}(this, document, history, location)
 
 
 

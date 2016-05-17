@@ -1,6 +1,6 @@
 {
   "name": "browser-history-lite",
-  "version": "0.1.5",
+  "version": "0.2.0",
   "stability": 2,
   "author": "Lauri Rooden <lauri@rooden.ee>",
   "license": "MIT",
@@ -26,8 +26,8 @@
     "url": "https://github.com/litejs/browser-history-lite/issues"
   },
   "devDependencies": {
-    "buildman": "0.2.31",
-    "testman": "0.1.10"
+    "buildman": "0.3.0",
+    "testman": "0.4.0"
   },
   "buildman": {
     "dist/hash-only.js": {
