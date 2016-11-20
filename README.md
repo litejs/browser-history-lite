@@ -8,25 +8,10 @@
 Browser History
 ===============
 
-Browser history helper.
+Deprecated!
+-----------
 
-
-### Usage
-
-```javascript
-
-function log(route) {
-	console.log("routed to ", route)
-}
-
-history.start(log)
-```
-
-External links
---------------
-
--   [Source-code on Github](https://github.com/litejs/browser-history-lite)
--   [Package on npm](https://npmjs.org/package/browser-history-lite)
+This package is merged into litejs, use require("litejs/src/history")
 
 
 ### Licence

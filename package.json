@@ -1,15 +1,10 @@
 {
   "name": "browser-history-lite",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "stability": 2,
   "author": "Lauri Rooden <lauri@rooden.ee>",
   "license": "MIT",
-  "description": "History helper for browser",
-  "keywords": [
-    "browser",
-    "history",
-    "litejs"
-  ],
+  "description": "deprecated!",
   "main": "index.js",
   "readmeFilename": "README.md",
   "files": [
